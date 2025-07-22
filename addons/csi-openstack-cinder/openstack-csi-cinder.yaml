@@ -395,7 +395,7 @@ spec:
             - --timeout=3m
             - --leader-election=true
             - --default-fstype=ext4
-            - --feature-gates=Topology=true
+            - --feature-gates=Topology="{{ .Params.provisioner.topology | default true }}"
             - --extra-create-metadata
           env:
             - name: ADDRESS
@@ -413,7 +413,6 @@ spec:
             - --csi-address=$(ADDRESS)
             - --timeout=3m
             - --leader-election=true
-            "{{- if .Params.provisioner.topology }}- f--feature-gates=Topology=false {{- end }}"
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
